@@ -11,12 +11,9 @@ const props = defineProps({
 
 <template>
   <div class="offcanvas-body">
-    <h3 v-if="helpData && helpData.subtitle" class="mt-4">
-      {{ helpData.subtitle }}
-    </h3>
     <div
       v-if="helpData && helpData.body"
-      class="mt-4"
+      class=""
       v-html="helpData.body"
     ></div>
     <img
@@ -34,7 +31,7 @@ const props = defineProps({
       class="btn btn-primary mt-4 w-100"
       :href="helpData.extraLink"
     >
-      {{ helpData.extraLink }}
+      Подробнее
     </a>
   </div>
 </template>

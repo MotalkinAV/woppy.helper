@@ -36,24 +36,29 @@ watch(showOffcanvas, (value) => {
     <Transition name="trans-moveside">
       <div
         v-if="showOffcanvas"
-        class="offcanvas offcanvas-end show visible w-90 w-lg-50"
+        class="offcanvas offcanvas-end show visible w-100 w-lg-50 px-lg-4 pb-2"
       >
         <div class="offcanvas-header">
           <div>
             <h2 v-if="helpData && helpData.title" class="mb-0">
               {{ helpData.title }}
             </h2>
+            <h3 v-if="helpData && helpData.subtitle" class="fs-6 mt-2 text-muted fw-normal mb-0">
+              {{ helpData.subtitle }}
+            </h3>
           </div>
           <button
             type="button"
-            class="btn-close text-reset my-1"
+            class="btn-close text-reset align-self-start mt-1"
             aria-label="Закрыть"
             @click="closeHelp"
           ></button>
         </div>
         <BaseLoader v-if="loadHelper" />
-        <BaseError v-if="helpError" :error="helpError"/>
-        <HelperBody v-if="helpData" :helpData="helpData" />
+        <template v-else>
+          <BaseError v-if="helpError" :error="helpError"/>
+          <HelperBody v-if="helpData" :helpData="helpData" />
+        </template>
       </div>
     </Transition>
   </div>
