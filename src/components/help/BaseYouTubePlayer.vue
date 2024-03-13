@@ -1,13 +1,6 @@
 <script setup>
-import {
-  ref,
-  onMounted,
-  defineProps,
-  onUpdated,
-  onUnmounted,
-  onBeforeUnmount,
-  onBeforeMount,
-} from "vue";
+import { ref, onMounted, defineProps, onUnmounted } from "vue";
+import { _createVideoURL } from "../../utils/_createURLs.js";
 
 const props = defineProps({
   youtubeLink: {
@@ -22,15 +15,8 @@ function setYoutubeURL(value) {
   youtubeURL.value = value;
 }
 
-function changeVideoURL(url) {
-  const match = url.match(
-    /(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|^)([^"&?\/\s]{11})/
-  );
-  return `https://www.youtube.com/embed/${match ? match[1] : null}`;
-}
-
 onMounted(() => {
-  setYoutubeURL(changeVideoURL(props.youtubeLink));
+  setYoutubeURL(_createVideoURL(props.youtubeLink));
 });
 onUnmounted(() => {
   setYoutubeURL("");
@@ -42,7 +28,7 @@ onUnmounted(() => {
     <iframe
       id="ytplayer"
       type="text/html"
-      class="rounded"
+      class="rounded bg-dark"
       :src="youtubeURL"
       frameborder="0"
     />

@@ -23,14 +23,13 @@ watch(showOffcanvas, (value) => {
 
 <template>
   <div>
-    <Teleport v-if="!showOffcanvas" to="body">
+    <Teleport to="body">
       <div class="position-absolute fixed-bottom">
-        <BaseWikiButton v-click-helper="'example'" />
+        <BaseWikiButton v-if="!showOffcanvas" v-click-helper="'example'" />
       </div>
-    </Teleport>
-
-    <Teleport v-if="showOffcanvas" to="body">
-      <BaseModalMask @click="closeHelp" />
+      <Transition name="trans-fade">
+        <BaseModalMask v-if="showOffcanvas" @click="closeHelp" />
+      </Transition>
     </Teleport>
 
     <Transition name="trans-moveside">
@@ -52,7 +51,7 @@ watch(showOffcanvas, (value) => {
           ></button>
         </div>
         <BaseLoader v-if="loadHelper" />
-        <BaseError v-if="helpError" :error="helpError"/>
+        <BaseError v-if="helpError" :error="helpError" />
         <HelperBody v-if="helpData" :helpData="helpData" />
       </div>
     </Transition>
@@ -60,14 +59,21 @@ watch(showOffcanvas, (value) => {
 </template>
 
 <style scoped>
+.trans-fade-enter-active,
+.trans-fade-leave-active,
 .trans-moveside-enter-active,
 .trans-moveside-leave-active {
-  transition: all 0.5s ease;
+  transition: all 0.5s ease !important;
 }
 
 .trans-moveside-enter-from,
 .trans-moveside-leave-to {
-  transform: translateX(100%) !important;
+  transform: translateX(100%);
+}
+
+.trans-fade-enter-from,
+.trans-fade-leave-to {
+  opacity: 0;
 }
 
 @media (min-width: 992px) {
