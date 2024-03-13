@@ -16,6 +16,8 @@ const { showOffcanvas, loadHelper, helpData, helpError } =
 
 const closeHelp = helperStore.closeHelpOffcanvas;
 
+const isTestBtnActive = ref(false)
+
 watch(showOffcanvas, (value) => {
   document.body.style.overflow = value ? "hidden" : "auto";
 });
@@ -24,7 +26,7 @@ watch(showOffcanvas, (value) => {
 <template>
   <div>
     <Teleport to="body">
-      <div class="position-absolute fixed-bottom">
+      <div class="position-absolute fixed-bottom" v-if="isTestBtnActive">
         <BaseWikiButton v-if="!showOffcanvas" v-click-helper="'example'" />
       </div>
       <Transition name="trans-fade">
@@ -37,12 +39,15 @@ watch(showOffcanvas, (value) => {
         v-if="showOffcanvas"
         class="offcanvas offcanvas-end show visible w-100 w-lg-50 px-lg-4 pb-2"
       >
-        <div class="offcanvas-header">
-          <div>
-            <h2 v-if="helpData && helpData.title" class="mb-0">
+        <div class="offcanvas-header mb-3">
+          <div class="py-2">
+            <h2 v-if="helpData && helpData.title" class="mb-0 fs-4">
               {{ helpData.title }}
             </h2>
-            <h3 v-if="helpData && helpData.subtitle" class="fs-6 mt-2 text-muted fw-normal mb-0">
+            <h3
+              v-if="helpData && helpData.subtitle"
+              class="fs-5 mt-2 text-muted opacity-75 fw-normal mb-0"
+            >
               {{ helpData.subtitle }}
             </h3>
           </div>
@@ -55,8 +60,8 @@ watch(showOffcanvas, (value) => {
         </div>
         <BaseLoader v-if="loadHelper" />
         <template v-else>
-          <BaseError v-if="helpError" :error="helpError"/>
-          <HelperBody v-if="helpData" :helpData="helpData" />
+          <BaseError v-if="helpError" :error="helpError" />
+          <HelperBody v-if="helpData" :help-data="helpData" />
         </template>
       </div>
     </Transition>
@@ -64,16 +69,20 @@ watch(showOffcanvas, (value) => {
 </template>
 
 <style scoped>
+.offcanvas {
+  z-index: 5000 !important;
+}
+
 .trans-fade-enter-active,
 .trans-fade-leave-active,
 .trans-moveside-enter-active,
 .trans-moveside-leave-active {
-  transition: all 0.5s ease !important;
+  transition: all 0.4s ease !important;
 }
 
 .trans-moveside-enter-from,
 .trans-moveside-leave-to {
-  transform: translateX(100%);
+  transform: translateX(100%) !important;
 }
 
 .trans-fade-enter-from,

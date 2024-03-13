@@ -11,7 +11,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="offcanvas-body">
+  <div class="offcanvas-body wo-scrollbar">
     <div
       v-if="helpData && helpData.body"
       class=""
