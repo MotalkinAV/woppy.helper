@@ -1,5 +1,6 @@
 <script setup>
 import BaseYouTubePlayer from "./BaseYouTubePlayer.vue";
+import { _createImgURL } from "../../utils/_createURLs.js"
 
 const props = defineProps({
   helpData: {
@@ -18,7 +19,7 @@ const props = defineProps({
     ></div>
     <img
       v-if="helpData && helpData.img"
-      :src="helpData.img"
+      :src="_createImgURL(helpData.id, helpData.img)"
       class="rounded w-100 img-fluid mt-4"
       :alt="helpData.img"
     />
@@ -30,6 +31,7 @@ const props = defineProps({
       v-if="helpData && helpData.extraLink"
       class="btn btn-primary mt-4 w-100"
       :href="helpData.extraLink"
+      target="_blank"
     >
       Подробнее
     </a>

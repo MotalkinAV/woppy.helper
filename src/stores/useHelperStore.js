@@ -1,7 +1,7 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-import _createFetchURL from "../utils/_create.fetch.url.js";
-import _fetchHelp from "../utils/_fetch.help.js";
+import { _createFetchURL } from "../utils/_createURLs.js";
+import _fetchHelp from "../utils/_fetch.js";
 
 export const useHelperStore = defineStore("helper", () => {
   const helpData = ref(null);
